@@ -4,6 +4,7 @@ exports.BlockChain = void 0;
 var block_1 = require("./block");
 var BlockChain = /** @class */ (function () {
     function BlockChain() {
+        this.length = 0;
         this.head = block_1.Block.genesis();
         this.tail = this.head;
         this.length++;

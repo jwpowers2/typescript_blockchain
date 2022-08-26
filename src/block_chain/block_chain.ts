@@ -1,10 +1,11 @@
 import { Block } from "./block";
 
 export class BlockChain {
-  length: 0;
+  length: number;
   head: Block;
   tail: Block;
   constructor() {
+    this.length = 0;
     this.head = Block.genesis();
     this.tail = this.head;
     this.length++;
