@@ -4,14 +4,15 @@ exports.BlockChain = void 0;
 var block_1 = require("./block");
 var BlockChain = /** @class */ (function () {
     function BlockChain() {
-        this.chain = [block_1.Block.genesis()];
+        this.head = block_1.Block.genesis();
+        this.tail = this.head;
+        this.length++;
     }
     BlockChain.prototype.addBlock = function (data) {
-        var newBlock = block_1.Block.mineBlock({
-            lastBlock: this.chain[this.chain.length - 1],
-            data: data
-        });
-        this.chain.push(newBlock);
+        var newBlock = block_1.Block.mineBlock(this.tail, data);
+        this.tail.next = newBlock;
+        this.tail = this.tail.next;
+        this.length++;
     };
     return BlockChain;
 }());

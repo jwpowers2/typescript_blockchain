@@ -1,16 +1,18 @@
-import  { Block }  from "./block"
-import { BlockArgs } from "./block_args";
+import { Block } from "./block";
 
 export class BlockChain {
-    chain: Block[]
-    constructor(){
-        this.chain = [Block.genesis()]
-    }
-    addBlock(data: string):void{
-        const newBlock = Block.mineBlock({
-            lastBlock: this.chain[this.chain.length-1],
-            data
-        });
-        this.chain.push(newBlock);
-    }
+  length: 0;
+  head: Block;
+  tail: Block;
+  constructor() {
+    this.head = Block.genesis();
+    this.tail = this.head;
+    this.length++;
+  }
+  addBlock(data: string): void {
+    const newBlock = Block.mineBlock(this.tail, data);
+    this.tail.next = newBlock;
+    this.tail = this.tail.next;
+    this.length++;
+  }
 }

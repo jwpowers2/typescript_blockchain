@@ -9,19 +9,20 @@ var Block = /** @class */ (function () {
         this.data = blockArgs.data;
         this.hash = blockArgs.hash;
         this.lastHash = blockArgs.lastHash;
+        this.next = null;
     }
     Block.genesis = function () {
         return new this(GENESIS_DATA);
     };
-    Block.mineBlock = function (_a) {
-        var lastBlock = _a.lastBlock, data = _a.data;
+    Block.mineBlock = function (lastBlock, data) {
         var timestamp = Date.now();
         var lastHash = lastBlock.hash;
-        return new this({
+        return new Block({
             timestamp: timestamp,
             lastHash: lastHash,
             data: data,
-            hash: cryptoHash(timestamp, lastHash, data)
+            hash: cryptoHash(timestamp, lastHash, data),
+            next: null
         });
     };
     return Block;
