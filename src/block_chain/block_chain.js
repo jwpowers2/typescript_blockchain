@@ -31,10 +31,10 @@ var BlockChain = /** @class */ (function () {
         var block = chain.head;
         if (block) {
             while (block.next) {
-                var timestamp = block.timestamp, lastHash = block.lastHash, hash = block.hash, data = block.data, next = block.next;
+                var timestamp = block.timestamp, lastHash = block.lastHash, hash = block.hash, data = block.data, next = block.next, nonce = block.nonce, difficulty = block.difficulty;
                 if (hash !== next.lastHash)
                     return false;
-                var validatedHash = cryptoHash(timestamp, lastHash, data);
+                var validatedHash = cryptoHash(timestamp, lastHash, data, nonce, difficulty);
                 if (block.hash !== validatedHash)
                     return false;
                 block = block.next;

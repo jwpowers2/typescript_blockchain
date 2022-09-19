@@ -10,18 +10,30 @@ var Block = /** @class */ (function () {
         this.hash = blockArgs.hash;
         this.lastHash = blockArgs.lastHash;
         this.next = null;
+        this.difficulty = blockArgs.difficulty;
+        this.nonce = blockArgs.nonce;
     }
     Block.genesis = function () {
         return new this(GENESIS_DATA);
     };
     Block.mineBlock = function (lastBlock, data) {
-        var timestamp = Date.now();
+        var hash, timestamp;
+        //const timestamp = Date.now();
         var lastHash = lastBlock.hash;
+        var difficulty = lastBlock.difficulty;
+        var nonce = 0;
+        do {
+            nonce++;
+            timestamp = Date.now();
+            hash = cryptoHash(timestamp, lastHash, data, nonce, difficulty);
+        } while (hash.substring(0, difficulty) !== "0".repeat(difficulty));
         return new Block({
             timestamp: timestamp,
             lastHash: lastHash,
             data: data,
-            hash: cryptoHash(timestamp, lastHash, data),
+            hash: hash,
+            difficulty: difficulty,
+            nonce: nonce,
             next: null
         });
     };

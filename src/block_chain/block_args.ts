@@ -6,4 +6,6 @@ export interface BlockArgs {
   lastHash: string;
   data: string;
   next: Block;
+  nonce: number;
+  difficulty: number;
 }
