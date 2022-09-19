@@ -16,11 +16,18 @@ var BlockChain = /** @class */ (function () {
         this.tail = this.tail.next;
         this.length++;
     };
-    BlockChain.prototype.isValidChain = function (chain) {
+    BlockChain.prototype.replaceChain = function (newBlockChain) {
+        if (newBlockChain.length <= this.length)
+            return;
+        if (!BlockChain.isValidChain(newBlockChain))
+            return;
+        console.log("replaced chain");
+        this.head = newBlockChain.head;
+    };
+    BlockChain.isValidChain = function (chain) {
         if (JSON.stringify(chain.head) !== JSON.stringify(block_1.Block.genesis())) {
             return false;
         }
-        // iter over the Linked List Blockchain
         var block = chain.head;
         if (block) {
             while (block.next) {

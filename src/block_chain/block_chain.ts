@@ -17,11 +17,16 @@ export class BlockChain {
     this.tail = this.tail.next;
     this.length++;
   }
-  isValidChain(chain: BlockChain): boolean {
+  replaceChain(newBlockChain: BlockChain): void {
+    if (newBlockChain.length <= this.length) return;
+    if (!BlockChain.isValidChain(newBlockChain)) return;
+    console.log("replaced chain");
+    this.head = newBlockChain.head;
+  }
+  static isValidChain(chain: BlockChain): boolean {
     if (JSON.stringify(chain.head) !== JSON.stringify(Block.genesis())) {
       return false;
     }
-    // iter over the Linked List Blockchain
     let block = chain.head;
     if (block) {
       while (block.next) {
