@@ -25,12 +25,9 @@ export class BlockChain {
     let block = chain.head;
     if (block) {
       while (block.next) {
-        if (block.hash !== block.next.lastHash) return false;
-        const validatedHash = cryptoHash(
-          block.timestamp,
-          block.lastHash,
-          block.data
-        );
+        const { timestamp, lastHash, hash, data, next } = block;
+        if (hash !== next.lastHash) return false;
+        const validatedHash = cryptoHash(timestamp, lastHash, data);
         if (block.hash !== validatedHash) return false;
         block = block.next;
       }
